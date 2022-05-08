@@ -59,3 +59,34 @@ y = [fun_labej2b(0.01 * i) for i in range(100, 201)]
 plt.plot(x, y, color="purple")
 plt.show()
 '''
+def fun_x_cuadrado(x):
+    f = x**2-4
+    df = 2*x
+    return f, df
+
+def rnewton(fun, x0, err, mit):
+    hx = []
+    hf = []
+    v, dv = fun(x0)
+    hx.append(x0)
+    hf.append(v)
+    print(f"0, {x0}, {v}")
+
+    for it in range(mit):
+        x1 = x0 - v/dv
+        v, dv = fun(x1)
+        hx.append(x1)
+        hf.append(v)
+        print(f"{it + 1}, {x1}, {v}")
+        if (abs(x1-x0)<err) or (abs(v) < err):
+            break
+        x0 = x1
+    return hx, hf
+'''
+'''    
+def buscar_raiz_cubica(a):
+    fun = lambda x : (x**3 - a, 3 * (x**2))
+    hx, hf = rnewton(fun, a, 1e-8, 100)
+    print(f"{hx}, {hf}")
+
+buscar_raiz_cubica(8)
